@@ -1,125 +1,127 @@
-import java.util.Calendar;
+import java.time.Year;
 
-public class Person
-{
-    public String firstName;
-    public String lastName;
-    public String idString;
-    public String inputTitle;
-    public int yearOfBirth;
-    public int year;
-    static private int IDSeed = 1;
+public class Person {
+    private String firstName;
+    private String lastName;
+    private String id;
+    private String title;
+    private int yearOfBirth;
 
-    public static void setIDSeed(int IDSeed)
-    {
-        Person.IDSeed = IDSeed;
-    }
-
-    public static int getIDSeed()
-    {
-        return IDSeed;
-    }
-
-    public Person( String firstName, String lastName, String idString, String inputTitle, int yearOfBirth)
-    {
+    public Person(String firstName, String lastName, String id, String title, int yearOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.idString = idString;
-        this.inputTitle = inputTitle;
+        this.id = id;
+        this.title = title;
         this.yearOfBirth = yearOfBirth;
-        this.year = year;
     }
 
-    private String genidString()
-    {
-        String newID = "" + IDSeed;
-        while(newID.length() < 8)
-        {
-            newID = "0" + newID;
-        }
-        IDSeed++;
-        return newID;
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", yearOfBirth=" + yearOfBirth +
+                '}';
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() { return firstName; }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getIdString()
-    {
-        return idString;
+    public String getId() {
+        return id;
     }
 
-    public void setIdString(String idString)
-    {
-        this.idString = idString;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getInputTitle()
-    {
-        return inputTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setInputTitle(String inputTitle)
-    {
-        this.inputTitle = inputTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getYearOfBirth()
-    {
+    public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(int yearOfBirth)
-    {
+    public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
     }
 
-    public int getYear() {
-        return year;
+    /**
+     * Method to get the Full Name from the Person object
+     *
+     * @return return first and last name as a full name String
+     */
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    /**
+     * Method to get the Formal Name from the Person object
+     *
+     * @return return title, first and last name as a formal name String
+     */
+    public String getFormalName() {
+        return title + " " + getFullName();
     }
 
-    public String fullName()
-    {
-        return this.firstName + " " + this.lastName;
+    /**
+     * Get the age as an int assumming that it is for the curr year
+     *
+     * @return return the age int assuming the current year
+     */
+    public int getAge() {
+        return Integer.parseInt(Year.now().toString()) - yearOfBirth;
     }
 
-    public String formalName()
-    {
-        return this.inputTitle + " " + fullName();
+    /**
+     * Get the age as an int that is for the given year
+     *
+     * @return return the age int assuming the given year
+     */
+    public int getAge(int year) {
+        return year - yearOfBirth;
     }
 
-    public String getAge()
-    {
-        return Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - this.yearOfBirth);
+    public String toCSVDataRecord() {
+        return firstName + ',' + lastName + ',' + id + ',' + title + ',' + yearOfBirth;
+    }
+    public String toJSONRecord() {
+        char DQ = '\u0022';
+        return "{" +
+                DQ + "firstName" + DQ + ":" + DQ + firstName + DQ + "," +
+                DQ + "lastName" + DQ + ":" + DQ + lastName + DQ + "," +
+                DQ + "id" + DQ + ":" + DQ + id + DQ + "," +
+                DQ + "title" + DQ + ":" + DQ + title + DQ + "," +
+                DQ + "yearOfBirth" + DQ + ":" + DQ + yearOfBirth + DQ +
+                "}";
     }
 
-    public String getAge(int year)
-    {
-        return Integer.toString(year - this.yearOfBirth);
+    public String toXMLRecord() {
+        return "<Person>" +
+                "<firstName>" + firstName + "</firstName>" +
+                "<lastName>" + lastName + "</lastName>" +
+                "<id>" + id + "</id>" +
+                "<title>" + title + "</title>" +
+                "<yearOfBirth>" + yearOfBirth + "</yearOfBirth>" +
+                "</Person>";
     }
 
-    public String toCSVRecordMethod()
-    {
-        return getFirstName() + ", " + getLastName() + ", " + getIdString() + ", " + getInputTitle() + ", " + getAge();
-    }
 }

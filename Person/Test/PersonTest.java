@@ -1,71 +1,84 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-class PersonTest
-{
-    Person p1, p2, p3,p4, p5, p6;
+public class PersonTest {
 
-    @BeforeEach
-    void setUp()
-    {
-        p1 = new Person("Bob", "Tester1", "00000A","Mr",1955);
-        p2 = new Person("Sally", "Tester2", "00000B", "Mrs", 1975);
-        p3 = new Person("Jamie", "Tester3", "00000C", "Mrs", 1985);
-        p4 = new Person("Rich", "Tester4", "00000D", "Mr", 2000);
-        p5 = new Person("Phil", "Tester5", "00000E", "Mr", 1993);
-        p6 = new Person("Sydney", "Tester6", "00000F", "Mrs", 1999);
-
+    Person p = new Person("Aidan", "Oates", "000002", "Mr", 2003);
+    @Test
+    public void testToString() {
+        assertEquals("Person{firstName='Aidan', lastName='Oates', id='000002', title='Mr', yearOfBirth=2003}", p.toString());
     }
 
     @Test
-    void getIdString()
-    {
-        assertEquals("00000A", p1.getIdString());
+    public void setFirstName() {
+        p.setFirstName("Aidan");
+        assertEquals("Aidan", p.getFirstName());
     }
 
     @Test
-    void getFirstName() {
-        assertEquals("Bob", p1.getFirstName());
+    public void setLastName() {
+        p.setLastName("Oates");
+        assertEquals("Oates", p.getLastName());
     }
 
     @Test
-    void getLastName() {
-        assertEquals("Tester1", p1.getLastName());
+    public void setId() {
+        p.setId("000003");
+        assertEquals("000003", p.getId());
     }
 
     @Test
-    void getYearOfBirth() {
-        assertEquals(1955, p1.getYearOfBirth());
-    }
-    @Test
-    void setIdString() {
-        p1.setIdString("00000B");
-        assertEquals("00000B", p1.getIdString());
+    public void setTitle() {
+        p.setTitle("Mr");
+        assertEquals("Mr", p.getTitle());
     }
 
     @Test
-    void setFirstName() {
-        p1.setFirstName("Sally");
-        assertEquals("Sally", p1.getFirstName());
+    public void setYearOfBirth() {
+        p.setYearOfBirth(2003);
+        assertEquals(2003, p.getYearOfBirth());
     }
 
     @Test
-    void setLastName() {
-        p1.setLastName("Tester2");
-        assertEquals("Tester2", p1.getLastName());
+    public void getFullName() {
+        assertEquals("Aidan Oates", p.getFullName());
     }
 
     @Test
-    void setYearOfBirth() {
-        p1.setYearOfBirth(1975);
-        assertEquals(1975, p1.getYearOfBirth());
+    public void getFormalName() {
+        assertEquals("Mr Aidan Oates", p.getFormalName());
     }
 
     @Test
-    void setYear() {
-        p1.setYear(1980);
-        assertEquals(1980, p1.getYear());
+    public void toCSVDataRecord() {
+        assertEquals("Aidan,Oates,000002,Mr,2003", p.toCSVDataRecord());
+    }
+    @Test
+    public void toJSONRecord() {
+        char DQ = '\u0022';
+        assertEquals(
+                "{" +
+                        DQ + "firstName" + DQ + ":" + DQ + "Aidan" + DQ + "," +
+                        DQ + "lastName" + DQ + ":" + DQ + "Oates" + DQ + "," +
+                        DQ + "id" + DQ + ":" + DQ + "000002" + DQ + "," +
+                        DQ + "title" + DQ + ":" + DQ + "Mr" + DQ + "," +
+                        DQ + "yearOfBirth" + DQ + ":" + DQ + "2003" + DQ +
+                        "}",
+                p.toJSONRecord());
+    }
+
+    @Test
+    public void toXMLRecord() {
+        assertEquals(
+                "<Person>" +
+                        "<firstName>Aidan</firstName>" +
+                        "<lastName>Oates</lastName>" +
+                        "<id>000002</id>" +
+                        "<title>Mr</title>" +
+                        "<yearOfBirth>2003</yearOfBirth>" +
+                        "</Person>",
+                p.toXMLRecord());
     }
 }
