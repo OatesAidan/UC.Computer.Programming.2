@@ -140,7 +140,7 @@ public class TagExtractorFrame extends JFrame{
                 {
                     area.append("Word:\t" + en.getKey() + "\t\tFrequency:\t" + en.getValue() + "\n");
                 }
-                reader.close(); // must close the file to seal it and flush buffer
+                reader.close(); // must close the file and ask for new
 
             }
         }
@@ -198,14 +198,12 @@ public class TagExtractorFrame extends JFrame{
         Path file = Paths.get(workingDirectory.getPath() + "\\src\\filteredlist.txt");
         try
         {
-            // Typical java pattern of inherited classes
-            // we wrap a BufferedWriter around a lower level BufferedOutputStream
+          
             OutputStream out =
                     new BufferedOutputStream(Files.newOutputStream(file, CREATE));
             BufferedWriter writer =
                     new BufferedWriter(new OutputStreamWriter(out));
-
-            // Finally can write the file LOL!
+             //file write
             writer.write(area.getText());
             JOptionPane.showMessageDialog(displayPnl,"File has been written!", "File", JOptionPane.INFORMATION_MESSAGE);
             writer.close(); // must close the file to seal it and flush buffer
